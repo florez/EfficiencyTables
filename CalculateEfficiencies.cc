@@ -171,25 +171,25 @@ void readConfigFile(string configFileList, string inputDir)
 	  map_eff_err[file_name.c_str()][inputDirectoryName.at(k).c_str()] = efferror*100;    
         }
       auto h_cumu = (TH1F*)rootTFile->Get("NDiJetCombinations/Events");
-      double comulative_eff = 0.0;
-      double comulative_eff_err = 0.0;       
+      double cumulative_eff = 0.0;
+      double cumulative_eff_err = 0.0;       
       if (h_cumu->GetBinContent(2) > 0.)
 	{
-	  comulative_eff = h_cumu->GetBinContent(2)/h_cumu->GetBinContent(1);
-	  comulative_eff_err =  calcBinEffError (h_cumu->GetBinContent(2), h_cumu->GetBinContent(1) );
-	  if ((comulative_eff+comulative_eff_err >= 1.) || ((comulative_eff-comulative_eff_err) <= 0.))
+	  cumulative_eff = h_cumu->GetBinContent(2)/h_cumu->GetBinContent(1);
+	  cumulative_eff_err =  calcBinEffError (h_cumu->GetBinContent(2), h_cumu->GetBinContent(1) );
+	  if ((cumulative_eff+cumulative_eff_err >= 1.) || ((cumulative_eff-cumulative_eff_err) <= 0.))
 	    {
-              comulative_eff_err = calcBayEffError(h_cumu->GetBinContent(2), h_cumu->GetBinContent(1)); 
+              cumulative_eff_err = calcBayEffError(h_cumu->GetBinContent(2), h_cumu->GetBinContent(1)); 
             }
 	  
         }
       if (h_cumu->GetBinContent(2) == 0.)
 	{
-	  comulative_eff_err =  calcBayEffError (1.0, h_cumu->GetBinContent(1));
+	  cumulative_eff_err =  calcBayEffError (1.0, h_cumu->GetBinContent(1));
         }
-      map_eff_val[file_name.c_str()]["Cumulative"] = comulative_eff*100;
-      map_eff_err[file_name.c_str()]["Cumulative"] = comulative_eff_err*100;
-      //cout << "Comulative efficiency =  " <<  comulative_eff*100. << " +/-  " << comulative_eff_err*100 << endl; 
+      map_eff_val[file_name.c_str()]["Cumulative"] = cumulative_eff*100;
+      map_eff_err[file_name.c_str()]["Cumulative"] = cumulative_eff_err*100;
+      //cout << "cumulative efficiency =  " <<  cumulative_eff*100. << " +/-  " << cumulative_eff_err*100 << endl; 
       //cout << "================================================================= " << endl; 
       //cout << " " << endl;
     }
