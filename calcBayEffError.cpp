@@ -20,10 +20,14 @@ float calcBayEffError (float numerator, float denominator)
   
   TGraphAsymmErrors* bayesEff = new TGraphAsymmErrors();
   bayesEff->BayesDivide (theNumHisto, theDenHisto, "b");
-  
+    
   if (bayesEff->GetErrorYhigh(0) > bayesEff->GetErrorYlow(0))
     {
       effError = bayesEff->GetErrorYhigh(0);
+      float efficiency = numerator/denominator;
+      if (effError > efficiency){
+         effError = bayesEff->GetErrorYlow(0);
+      }
     }
   else
     {
